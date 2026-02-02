@@ -16,9 +16,9 @@ export async function fetchGithubUser(username: string) {
     const repoDetails = repos.data.map((repo: any) => ({
       id: repo.id,
       name: repo.name,
-      url: repo.html_url,
       description: repo.description,
       language: repo.language,
+      repoUrl: repo.html_url,
       stars: repo.stargazers_count,
       forks: repo.forks_count,
       updatedAt: repo.updated_at,

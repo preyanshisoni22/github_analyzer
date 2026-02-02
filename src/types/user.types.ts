@@ -18,6 +18,13 @@ export interface GithubUserDTO {
     language: string | null;
     stars: number;
     forks: number;
-    updatedAt: string;
   }[];
+
+  stats?:{
+  id:number,
+  totalStars:number,  
+  totalForks:number,
+  totalLanguageUsed:number,
+  topLanguages:Record<string, number>;
+  }
 }

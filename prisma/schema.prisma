@@ -36,7 +36,9 @@ model Repository {
   id           Int    @id @default(autoincrement())
   githubRepoId BigInt @unique
   name         String
+  description  String?
   language     String?
+  repoUrl      String
   stars        Int
   forks        Int
   userId       Int
@@ -44,9 +46,10 @@ model Repository {
 }
 
 model UserStats {
-  userId       Int   @id
-  totalStars   Int
-  totalForks   Int
-  topLanguages Json
-  user         GithubUser @relation(fields: [userId], references: [id])
+  userId              Int   @id
+  totalStars          Int
+  totalForks          Int
+  totalLanguageUsed   Int
+  topLanguages        Json
+  user                GithubUser @relation(fields: [userId], references: [id])
 }
