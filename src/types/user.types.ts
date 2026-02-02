@@ -7,4 +7,14 @@ export interface GithubUserDTO {
   repos: number;
   avatarUrl: string;
   profileUrl: string;
+  repository?: {
+    id: number;
+    name: string;
+    url: string;
+    description: string | null;
+    language: string | null;
+    stars: number;
+    forks: number;
+    updatedAt: string;
+  }[];
 }
