@@ -20,19 +20,20 @@ export const upsertGithubUser = async (
   user: GithubUserDTO,
 ) => {
   const repositoriesData = (user.repository || []).map((repo: any) => ({
-    githubRepoId: repo.id,
+    githubRepoId: BigInt(repo.id),
     name: repo.name,
     language: repo.language,
     stars: repo.stars,
     forks: repo.forks,
   }));
   return prisma.githubUser.upsert({
-    where: { githubId: user.githubId },
+    where: { githubId: BigInt(user.githubId) },
     update: {
       followers: user.followers,
       following: user.following,
       publicRepos: user.repos,
       avatarUrl: user.avatarUrl,
+      gitProfileUrl:user.profileUrl,
       lastSyncedAt: new Date(),
       gitProfileCreated_at: new Date(user.githubCreatedAt),
       gitProfileUpdated_at: new Date(user.githubUpdatedAt),
@@ -51,6 +52,7 @@ export const upsertGithubUser = async (
       avatarUrl: user.avatarUrl,
       gitProfileCreated_at: new Date(user.githubCreatedAt),
       gitProfileUpdated_at: new Date(user.githubUpdatedAt),
+      gitProfileUrl:user.profileUrl,
 
       repositories: {
         create: repositoriesData,

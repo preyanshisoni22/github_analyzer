@@ -14,21 +14,22 @@ datasource db {
 }
 
 model GithubUser {
-  id                  Int        @id @default(autoincrement())
-  githubId            BigInt     @unique
-  username            String     @unique
-  avatarUrl           String?
-  bio                 String?
-  followers           Int
-  following           Int
-  publicRepos         Int
-  lastSyncedAt        DateTime
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  repositories        Repository[]
-  stats               UserStats?
+  id                     Int        @id @default(autoincrement())
+  githubId               BigInt     @unique
+  username               String     @unique
+  avatarUrl              String?
+  bio                    String?
+  followers              Int
+  following              Int
+  publicRepos            Int
+  lastSyncedAt           DateTime
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  repositories           Repository[]
+  stats                  UserStats?
   gitProfileCreated_at   DateTime 
   gitProfileUpdated_at   DateTime 
+  gitProfileUrl          String
 }
 
 model Repository {

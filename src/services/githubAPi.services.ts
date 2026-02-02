@@ -31,8 +31,8 @@ export async function fetchGithubUser(username: string) {
       following: profile.data.following,
       repos: profile.data.public_repos,
       avatarUrl: profile.data.avatar_url,
-      profileUrl: profile.data.html_url,
       repository:repoDetails,
+      profileUrl: profile.data.html_url,
       githubCreatedAt: profile.data.created_at,
       githubUpdatedAt: profile.data.updated_at,
     };
