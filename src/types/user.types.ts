@@ -7,6 +7,9 @@ export interface GithubUserDTO {
   repos: number;
   avatarUrl: string;
   profileUrl: string;
+  githubCreatedAt:string,
+  githubUpdatedAt:string
+  
   repository?: {
     id: number;
     name: string;

@@ -34,6 +34,8 @@ export const upsertGithubUser = async (
       publicRepos: user.repos,
       avatarUrl: user.avatarUrl,
       lastSyncedAt: new Date(),
+      gitProfileCreated_at: new Date(user.githubCreatedAt),
+      gitProfileUpdated_at: new Date(user.githubUpdatedAt),
       repositories: {
         deleteMany: {},
         create: repositoriesData,
@@ -47,6 +49,8 @@ export const upsertGithubUser = async (
       following: user.following,
       publicRepos: user.repos,
       avatarUrl: user.avatarUrl,
+      gitProfileCreated_at: new Date(user.githubCreatedAt),
+      gitProfileUpdated_at: new Date(user.githubUpdatedAt),
 
       repositories: {
         create: repositoriesData,

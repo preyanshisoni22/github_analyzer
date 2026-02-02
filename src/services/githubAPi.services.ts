@@ -32,7 +32,9 @@ export async function fetchGithubUser(username: string) {
       repos: profile.data.public_repos,
       avatarUrl: profile.data.avatar_url,
       profileUrl: profile.data.html_url,
-      repository:repoDetails
+      repository:repoDetails,
+      githubCreatedAt: profile.data.created_at,
+      githubUpdatedAt: profile.data.updated_at,
     };
 
   } catch (error: any) {

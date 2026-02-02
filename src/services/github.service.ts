@@ -1,5 +1,3 @@
-
-import  prisma from "../db/prisma.js";
 import {upsertGithubUser, findCachedUser} from "./github.repository.js"
 import { fetchGithubUser } from "./githubAPi.services.js";
 import { createError } from "../utils/app.errors.js";
