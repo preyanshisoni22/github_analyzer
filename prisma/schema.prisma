@@ -33,16 +33,17 @@ model GithubUser {
 }
 
 model Repository {
-  id           Int    @id @default(autoincrement())
-  githubRepoId BigInt @unique
-  name         String
-  description  String?
-  language     String?
-  repoUrl      String
-  stars        Int
-  forks        Int
-  userId       Int
-  user         GithubUser @relation(fields: [userId], references: [id])
+  id                Int    @id @default(autoincrement())
+  githubRepoId      BigInt @unique
+  name              String
+  description       String?
+  language          String?
+  repoUrl           String
+  stars             Int
+  forks             Int
+  repoCreatedAt     DateTime   
+  userId            Int
+  user              GithubUser @relation(fields: [userId], references: [id])
 }
 
 model UserStats {

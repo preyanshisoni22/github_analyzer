@@ -18,6 +18,7 @@ export interface GithubUserDTO {
     language: string | null;
     stars: number;
     forks: number;
+    repoCreatedAt:string
   }[];
 
   stats?:{

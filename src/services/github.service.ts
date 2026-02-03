@@ -2,7 +2,7 @@ import {upsertGithubUser, findCachedUser} from "./github.repository.js"
 import { fetchGithubUser } from "./githubAPi.services.js";
 import { createError } from "../utils/app.errors.js";
 
-const STALE_TIME = 6 * 60 * 60 * 1000;
+const STALE_TIME = 60 * 60 * 1000;
 
 export async function getGithubUser(username:string) {
   if (!username) {

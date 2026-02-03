@@ -22,6 +22,7 @@ export async function fetchGithubUser(username: string) {
       stars: repo.stargazers_count,
       forks: repo.forks_count,
       updatedAt: repo.updated_at,
+      repoCreatedAt: repo.created_at,
     }));
     return {
       githubId: profile.data.id,

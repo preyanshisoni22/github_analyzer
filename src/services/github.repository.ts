@@ -1,6 +1,7 @@
 import prisma from "../db/prisma.js";
 import { GithubUserDTO } from "../types/user.types.js";
 import { createError } from "../utils/app.errors.js";
+import { getRepoCreationActivity } from "../utils/repo.util.js";
 import { calculateStats } from "../utils/stats.util.js";
 
 
@@ -12,10 +13,15 @@ export async function findCachedUser(username: string) {
       stats: true,
     },
   });
-if(!user){
-  throw createError("User not found in db",404);
-}
-return user;
+
+  if (!user) {
+    throw createError("User not found in db", 404);
+  }
+  const repoActivity = getRepoCreationActivity(user?.repositories ?? []);
+  return {
+    ...user,
+    repoActivity
+  }
 }
 
 export const upsertGithubUser = async (
@@ -27,11 +33,12 @@ export const upsertGithubUser = async (
     name: repo.name,
     language: repo.language,
     description: repo.description,
-    repoUrl :  repo.repoUrl,
+    repoUrl: repo.repoUrl,
     stars: repo.stars,
     forks: repo.forks,
+    repoCreatedAt: new Date(repo.repoCreatedAt)
   }));
-  return prisma.githubUser.upsert({
+  const result = await prisma.githubUser.upsert({
     where: { githubId: BigInt(user.githubId) },
     update: {
       followers: user.followers,
@@ -43,20 +50,26 @@ export const upsertGithubUser = async (
       gitProfileCreated_at: new Date(user.githubCreatedAt),
       gitProfileUpdated_at: new Date(user.githubUpdatedAt),
       repositories: {
-        deleteMany: {},
-        create: repositoriesData,
+        upsert: repositoriesData.map((repo) => ({
+          where: {
+            githubRepoId: repo.githubRepoId,
+          },
+          update:repo,
+          create:repo
+        })),
       },
       stats: {
         upsert: {
           update: {
             totalStars: stats.totalStars,
             totalForks: stats.totalForks,
+            totalLanguageUsed: stats.totalLanguageUsed,
             topLanguages: stats.topLanguages,
           },
           create: {
             totalStars: stats.totalStars,
             totalForks: stats.totalForks,
-             totalLanguageUsed:stats.totalLanguageUsed,
+            totalLanguageUsed: stats.totalLanguageUsed,
             topLanguages: stats.topLanguages,
           },
         },
@@ -81,7 +94,7 @@ export const upsertGithubUser = async (
         create: {
           totalStars: stats.totalStars,
           totalForks: stats.totalForks,
-          totalLanguageUsed:stats.totalLanguageUsed,
+          totalLanguageUsed: stats.totalLanguageUsed,
           topLanguages: stats.topLanguages
         },
       },
@@ -91,4 +104,9 @@ export const upsertGithubUser = async (
       stats: true,
     },
   });
+  const repoActivity = getRepoCreationActivity(result?.repositories ?? []);
+  return {
+    ...result,
+    repoActivity,
+  };
 };

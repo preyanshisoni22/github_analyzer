@@ -4,14 +4,11 @@
     const topLanguages: Record<string, number> = {};
     const uniqueLanguages = new Set<string>()
     
-
     for (const repo of repos) {
       totalStars += repo.stars;
       totalForks += repo.forks;
       
-
-
-      if (repo.language) {
+    if (repo.language) {
         uniqueLanguages.add(repo.language);
         topLanguages[repo.language] =
           (topLanguages[repo.language] || 0) + 1;
